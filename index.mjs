@@ -21,7 +21,7 @@ for (const host of body.hosts) {
     })
     client.on('error', () => {})
     client.destroy()
-    console.log({ node: host.net_address, trending_ttfb: new Date() - start })
+    console.log({ node: host.net_address, connect_ms: new Date() - start })
   } catch (error) {
     console.log({ node: host.net_address, error: error.message })
   }
