@@ -8,6 +8,7 @@ if (!res.ok) {
 }
 
 const body = await res.json()
+console.error(`Checking ${body.hosts.length} hosts`)
 for (const host of body.hosts) {
   const start = new Date()
   try {
