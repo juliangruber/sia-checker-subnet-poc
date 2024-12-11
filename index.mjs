@@ -8,21 +8,20 @@ if (!res.ok) {
 }
 
 const body = await res.json()
-const nodes = body.hosts
-for (const node of nodes) {
+for (const host of body.hosts) {
   const start = new Date()
   try {
     const client = net.createConnection({
-      host: node.net_address.split(':')[0],
-      port: node.net_address.split(':')[1]
+      host: host.net_address.split(':')[0],
+      port: host.net_address.split(':')[1]
     })
     await pTimeout(once(client, 'connect'), {
       milliseconds: 5_000
     })
     client.on('error', () => {})
     client.destroy()
-    console.log({ node: node.net_address, trending_ttfb: new Date() - start })
+    console.log({ node: host.net_address, trending_ttfb: new Date() - start })
   } catch (error) {
-    console.log({ node: node.net_address, error: error.message })
+    console.log({ node: host.net_address, error: error.message })
   }
 }
